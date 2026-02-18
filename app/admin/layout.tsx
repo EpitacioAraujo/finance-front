@@ -1,13 +1,13 @@
 'use client';
 
 import { ProtectedRoute } from '@/components/protected-route';
-import { AppLayout } from '@/components/app-layout';
+import { AdminAppLayout } from '@/components/admin-app-layout';
 import { usePathname } from 'next/navigation';
 
 /**
  * Protected Routes Layout
  * Agrupa todas as rotas protegidas (autenticadas)
- * Aplica ProtectedRoute + AppLayout automaticamente
+ * Aplica ProtectedRoute + AdminAppLayout automaticamente
  */
 export default function ProtectedLayout({
   children,
@@ -23,7 +23,7 @@ export default function ProtectedLayout({
 
   return (
     <ProtectedRoute>
-      <AppLayout>{children}</AppLayout>
+      <AdminAppLayout>{children}</AdminAppLayout>
     </ProtectedRoute>
   );
 }

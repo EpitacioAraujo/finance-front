@@ -15,11 +15,12 @@ import {
   Menu,
   X,
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { useLogoutMutation } from '@/hooks/mutations/useLogoutMutation';
 import { setUnauthorizedHandler } from '@/lib/api/api-client';
 import { useHandleUnauthorized } from '@/hooks/useHandleUnauthorized';
+import { useAuthContext } from '@/hooks/contextProviders/AuthContextProvider';
 
 interface NavItem {
   title: string;
@@ -40,11 +41,13 @@ const navigation: NavItem[] = [
   },
 ];
 
-export function AppLayout({ children }: { children: React.ReactNode }) {
+export function AdminAppLayout({ children }: { children: React.ReactNode }) {
+  const {user} = useAuthContext();
   const pathname = usePathname();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const logoutMutation = useLogoutMutation();
+
   const { handleUnauthorized } = useHandleUnauthorized();
 
   // Registrar handler de 401 quando o componente montar
@@ -67,6 +70,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   };
 
   const filteredNavigation = navigation.filter(canAccess);
+
+  const isActive = useCallback((href: string) => {
+    if (href === '/admin') {
+      return pathname === '/admin';
+    }
+    return pathname === href || pathname.startsWith(href + '/');
+  }, [pathname]);
 
   return (
     <div className="flex h-screen overflow-hidden bg-zinc-50 dark:bg-zinc-950">
@@ -99,19 +109,19 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
           {/* User info */}
           <div className="border-b px-6 py-4 dark:border-zinc-800">
-            <p className="text-sm font-medium">Nome</p>
-            <div className="mt-1 flex items-center gap-2">
+            <p className="text-sm font-medium">{user?.name}</p>
+            {/* <div className="mt-1 flex items-center gap-2">
               <Badge variant="secondary" className="text-xs">
-                Role
+                {user?.role}
               </Badge>
-            </div>
+            </div> */}
           </div>
 
           {/* Navigation */}
           <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
             {filteredNavigation.map((item) => {
               const Icon = item.icon;
-              const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+              const isActiveItem = isActive(item.href);
               return (
                 <Link
                   key={item.href}
@@ -119,7 +129,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   onClick={() => setSidebarOpen(false)}
                   className={cn(
                     'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-                    isActive
+                    isActiveItem
                       ? 'bg-primary text-primary-foreground'
                       : 'text-muted-foreground hover:bg-zinc-100 hover:text-foreground dark:hover:bg-zinc-800'
                   )}
@@ -156,7 +166,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <Menu className="h-6 w-6" />
           </button>
           <h2 className="text-lg font-semibold">
-            {filteredNavigation.find((item) => pathname === item.href)?.title || 'Dibiê ERP'}
+            {filteredNavigation.find((item) => isActive(item.href))?.title || 'Dibiê ERP'}
           </h2>
         </header>
 

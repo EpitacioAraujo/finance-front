@@ -18,7 +18,7 @@ export default function NotFound() {
         </p>
         <div className="flex gap-4 justify-center">
           <Button asChild>
-            <Link href="/command/dashboard">Voltar ao Dashboard</Link>
+            <Link href="/admin">Voltar ao Dashboard</Link>
           </Button>
         </div>
       </div>
