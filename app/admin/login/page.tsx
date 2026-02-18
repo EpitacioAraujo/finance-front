@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Text } from '@/components/ui/text';
 import { useLoginMutation } from '@/hooks/mutations/useLoginMutation';
 import { useState } from 'react';
 
@@ -33,8 +34,14 @@ export default function AdminLoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 dark:bg-zinc-950">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Admin - Dibiê ERP</CardTitle>
-          <CardDescription>Insira suas credenciais administrativas</CardDescription>
+          <CardTitle>
+            <Text asChild variant="h2">
+              <h2>Admin - Dibiê ERP</h2>
+            </Text>
+          </CardTitle>
+          <CardDescription>
+            <Text variant="body-sm" tone="muted">Insira suas credenciais administrativas</Text>
+          </CardDescription>
         </CardHeader>
 
         <form onSubmit={handleSubmit}>
@@ -67,12 +74,14 @@ export default function AdminLoginPage() {
             <Button type="submit" className="w-full" disabled={isLoginLoading}>
               {isLoginLoading ? 'Signing in...' : 'Sign in'}
             </Button>
-            <p className="text-center text-sm text-muted-foreground">
+            <Text asChild variant="body-sm" tone="muted" className="text-center">
+              <p>
               Precisa acessar a área de clientes?{' '}
               <Link href="/login" className="font-medium text-primary hover:underline">
                 Login do cliente
               </Link>
-            </p>
+              </p>
+            </Text>
           </CardFooter>
         </form>
       </Card>

@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Package, FileText, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { Text } from '@/components/ui/text';
 // import { BUSINESS_RULES } from '@/lib/domain/constants';
 
 export default function DashboardPage() {
@@ -13,8 +14,10 @@ export default function DashboardPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground">Visão geral do seu inventário e vendas</p>
+        <Text asChild variant="h1">
+          <h1>Dashboard</h1>
+        </Text>
+        <Text tone="muted">Visão geral do seu inventário e vendas</Text>
       </div>
 
       {/* Stats Cards */}
@@ -26,8 +29,10 @@ export default function DashboardPage() {
             <Package className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">10</div>
-            <p className="text-xs text-muted-foreground">10 ativos</p>
+            <Text asChild variant="h2">
+              <div>10</div>
+            </Text>
+            <Text variant="caption" tone="muted">10 ativos</Text>
           </CardContent>
         </Card>
 
@@ -38,8 +43,10 @@ export default function DashboardPage() {
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">0</div>
-            <p className="text-xs text-muted-foreground">0 confirmados</p>
+            <Text asChild variant="h2">
+              <div>0</div>
+            </Text>
+            <Text variant="caption" tone="muted">0 confirmados</Text>
           </CardContent>
         </Card>
 
@@ -50,7 +57,9 @@ export default function DashboardPage() {
             <AlertTriangle className="h-4 w-4 text-destructive" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">10</div>
+            <Text asChild variant="h2">
+              <div>10</div>
+            </Text>
             {/* <p className="text-xs text-muted-foreground">
               Menos de {BUSINESS_RULES.MIN_LOW_STOCK} unidades
             </p> */}
@@ -64,8 +73,10 @@ export default function DashboardPage() {
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">0</div>
-            <p className="text-xs text-muted-foreground">Últimos 7 dias</p>
+            <Text asChild variant="h2">
+              <div>0</div>
+            </Text>
+            <Text variant="caption" tone="muted">Últimos 7 dias</Text>
           </CardContent>
         </Card>
       </div>
@@ -87,14 +98,18 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent>
           {products.length === 0 ? (
-            <p className="text-muted-foreground">Nenhum produto criado ainda</p>
+            <Text tone="muted">Nenhum produto criado ainda</Text>
           ) : (
             <div className="space-y-2">
               {products.slice(0, 5).map((product) => (
                 <div key={product.id} className="flex justify-between items-center p-2 border rounded">
                   <div>
-                    <p className="font-medium">{product.name}</p>
-                    <p className="text-sm text-muted-foreground">{product.unitOfMeasure}</p>
+                    <Text asChild>
+                      <p className="font-medium">{product.name}</p>
+                    </Text>
+                    <Text variant="body-sm" tone="muted">
+                      {product.unitOfMeasure}
+                    </Text>
                   </div>
                   <Link href={`/products/${product.id}`}>
                     <Button variant="ghost" size="sm">

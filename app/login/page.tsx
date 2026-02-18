@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Text } from '@/components/ui/text';
 import { useLoginMutation } from '@/hooks/mutations/useLoginMutation';
 import { useState } from 'react';
 
@@ -34,8 +35,14 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 dark:bg-zinc-950">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Dibiê ERP</CardTitle>
-          <CardDescription>Insira suas credenciais para acessar sua conta</CardDescription>
+          <CardTitle>
+            <Text asChild variant="h2">
+              <h2>Dibiê ERP</h2>
+            </Text>
+          </CardTitle>
+          <CardDescription>
+            <Text variant="body-sm" tone="muted">Insira suas credenciais para acessar sua conta</Text>
+          </CardDescription>
         </CardHeader>
 
         <form onSubmit={handleSubmit}>
@@ -68,12 +75,14 @@ export default function LoginPage() {
             <Button type="submit" className="w-full" disabled={isLoginLoading}>
               {isLoginLoading ? 'Signing in...' : 'Sign in'}
             </Button>
-            <p className="text-center text-sm text-muted-foreground">
+            <Text asChild variant="body-sm" tone="muted" className="text-center">
+              <p>
               Não possui uma conta?{' '}
               <Link href="/register" className="font-medium text-primary hover:underline">
                 Registrar-se
               </Link>
-            </p>
+              </p>
+            </Text>
           </CardFooter>
         </form>
       </Card>
