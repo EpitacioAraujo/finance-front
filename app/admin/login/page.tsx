@@ -36,7 +36,7 @@ export default function AdminLoginPage() {
         <CardHeader className="space-y-1">
           <CardTitle>
             <Text asChild variant="h2">
-              <h2>Admin - Dibiê ERP</h2>
+              <h2>Finance bot</h2>
             </Text>
           </CardTitle>
           <CardDescription>

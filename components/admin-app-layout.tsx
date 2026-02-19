@@ -21,6 +21,7 @@ import { useLogoutMutation } from '@/hooks/mutations/useLogoutMutation';
 import { setUnauthorizedHandler } from '@/lib/api/api-client';
 import { useHandleUnauthorized } from '@/hooks/useHandleUnauthorized';
 import { useAuthContext } from '@/hooks/contextProviders/AuthContextProvider';
+import { Text } from './ui/text';
 
 interface NavItem {
   title: string;
@@ -37,6 +38,11 @@ const navigation: NavItem[] = [
   {
     title: 'Transações',
     href: '/admin/transactions',
+    icon: Package,
+  },
+  {
+    title: 'Tipo de pagamento',
+    href: '/admin/payment-type',
     icon: Package,
   },
 ];
@@ -98,7 +104,7 @@ export function AdminAppLayout({ children }: { children: React.ReactNode }) {
         <div className="flex h-full flex-col">
           {/* Logo */}
           <div className="flex h-16 items-center justify-between border-b px-6 dark:border-zinc-800">
-            <h1 className="text-xl font-bold">Dibiê ERP</h1>
+            <Text variant={'h1'}>Finance bot</Text>
             <button
               onClick={() => setSidebarOpen(false)}
               className="lg:hidden"
@@ -165,13 +171,13 @@ export function AdminAppLayout({ children }: { children: React.ReactNode }) {
           >
             <Menu className="h-6 w-6" />
           </button>
-          <h2 className="text-lg font-semibold">
-            {filteredNavigation.find((item) => isActive(item.href))?.title || 'Dibiê ERP'}
-          </h2>
+          <Text variant="h2" className="text-lg font-semibold">
+            {filteredNavigation.find((item) => isActive(item.href))?.title || 'Finance bot'}
+          </Text>
         </header>
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto p-6 flex flex-col gap-5">{children}</main>
       </div>
     </div>
   );

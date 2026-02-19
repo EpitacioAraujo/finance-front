@@ -19,7 +19,6 @@ const geistMono = Geist_Mono({
 
 // Note: Metadata deve estar em layout separado pois é RSC only
 // export const metadata: Metadata = {
-//   title: "Dibiê - WhatsApp Sales ERP",
 //   description: "Inventory and sales management system",
 // };
 
