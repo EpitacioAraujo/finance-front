@@ -6,6 +6,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 import { AuthContextProvider } from "@/hooks/contextProviders/AuthContextProvider";
+import axios from "axios";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,7 +40,15 @@ export default function RootLayout({
             refetchOnWindowFocus: false,
           },
           mutations: {
-            retry: 1,
+            retry: (failureCount, error) => {
+              if (axios.isAxiosError(error)) {
+                const status = error.response?.status;
+                if (status === 422) {
+                  return false;
+                }
+              }
+              return failureCount < 1;
+            },
           },
         },
       })

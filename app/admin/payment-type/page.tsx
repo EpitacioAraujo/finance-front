@@ -16,8 +16,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Text } from "@/components/ui/text";
 import { Dialog } from "@radix-ui/react-dialog";
 import { Plus, Save, X } from "lucide-react";
-import { useCreatePaymentType } from "@/hooks/mutations/paymentType/useCreatePaymentType";
-import { useGetAllPaymentTypes } from "@/hooks/mutations/paymentType/useGetAllPaymentTypes";
+import { useCreatePaymentType } from "@/hooks/paymentType/useCreatePaymentType";
+import { useGetAllPaymentTypes } from "@/hooks/paymentType/useGetAllPaymentTypes";
 import { Controller, useForm } from "react-hook-form";
 
 export default function Page() {
