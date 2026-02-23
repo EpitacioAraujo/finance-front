@@ -46,6 +46,8 @@ export default function RootLayout({
                 if (status === 422) {
                   return false;
                 }
+              } else if ((error as { statusCode?: number } | undefined)?.statusCode === 422) {
+                return false;
               }
               return failureCount < 1;
             },
