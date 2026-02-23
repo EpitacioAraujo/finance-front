@@ -1,11 +1,9 @@
-import { ApiClient } from "../../types/ApiCliente";
-import { BaseResponse } from "../../types/baseResponse";
+import { ApiClient } from "@/lib/api/types/ApiCliente";
+import { BaseResponse } from "@/lib/api/types/baseResponse";
+
+import { Payload } from "@/lib/api/types/transaction/create";
 
 export function create(apiClient: ApiClient) {
-  return (payload: {
-    amount: number;
-    description: string;
-    date: string;
-  }) =>
+  return (payload: Payload) =>
     apiClient.post<BaseResponse<void>>("/admin/transaction", payload);
 }

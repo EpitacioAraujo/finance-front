@@ -2,6 +2,12 @@
 @import "tw-animate-css";
 @import "sweetalert2/dist/sweetalert2.min.css";
 
+/* Ensure SweetAlert2 overlays stay on top and capture pointer events */
+.swal2-container {
+  z-index: 100000 !important;
+  pointer-events: auto;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

@@ -15,5 +15,6 @@ export function useGetAllPaymentTypes() {
         data: query.data,
         isLoading: ["loading","idle"].includes(query.status),
         error: query.error,
+        refetch: query.refetch,
     }
 }

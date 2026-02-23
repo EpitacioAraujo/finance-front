@@ -1,4 +1,7 @@
 import Swal from "sweetalert2";
+import { Check, X } from "lucide-react";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 
 /**
  * Alerta de sucesso
@@ -41,20 +44,25 @@ export function alertError(
 export function alertConfirm(
   title: string = "Confirmação",
   message: string = "Tem certeza?",
-  confirmText: string = "Confirmar",
-  cancelText: string = "Cancelar",
+  confirmText?: string,
+  cancelText?: string,
 ): Promise<boolean> {
+  const confirmLabel =
+    confirmText ?? renderToStaticMarkup(createElement(Check, { size: 16 }));
+  const cancelLabel =
+    cancelText ?? renderToStaticMarkup(createElement(X, { size: 16 }));
   return Swal.fire({
     icon: "warning",
     title,
     text: message,
     showCancelButton: true,
-    confirmButtonText: confirmText,
-    cancelButtonText: cancelText,
+    confirmButtonText: confirmLabel,
     confirmButtonColor: "#3b82f6",
+    cancelButtonText: cancelLabel,
     cancelButtonColor: "#6b7280",
-  }).then((result) => result.isConfirmed);
-}
+  })
+    .then((result) => result.isConfirmed);
+} 
 
 /**
  * Alerta de loading

@@ -1,6 +1,6 @@
 export type PaymentType = {
     name: string;
-    cycle_type: 'weekly' | 'biweekly' | 'monthly' | 'yearly';
+    cycle_type: string;
     cycle_day_start: number;
     cycle_day_end: number;
     id?: string;

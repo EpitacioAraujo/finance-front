@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from "axios";
+import { BaseError } from "@/lib/api/types/BaseError";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3301";
 
@@ -33,14 +34,14 @@ export class AxiosApiClient {
     // Response interceptor: tenta refresh no 401 e repete a requisição original
     this.client.interceptors.response.use(
       (response) => response,
-      async (error: AxiosError) => {
+      async (error: AxiosError<BaseError>) => {
         const originalRequest = error.config as (InternalAxiosRequestConfig & {
           _retry?: boolean;
         }) | undefined;
 
         // Se não for 401 ou não tiver request original, propaga erro
         if (!originalRequest || error.response?.status !== 401) {
-          return Promise.reject(error);
+          return Promise.reject(error.response?.data ?? error);
         }
 
         // Evita loop: não tenta refresh se o 401 veio do /auth/refresh
@@ -49,9 +50,7 @@ export class AxiosApiClient {
           if (this.onUnauthorized) {
             this.onUnauthorized();
           }
-          return Promise.reject(
-            new Error("Não autorizado. Por favor, faça login novamente."),
-          );
+          return Promise.reject(error.response?.data ?? error);
         }
 
         // Marca a requisição para não repetir indefinidamente
@@ -71,7 +70,9 @@ export class AxiosApiClient {
           if (this.onUnauthorized) {
             this.onUnauthorized();
           }
-          return Promise.reject(refreshError);
+          return Promise.reject(
+            (refreshError as AxiosError<BaseError>)?.response?.data ?? refreshError,
+          );
         } finally {
           // Libera a promessa para futuras tentativas
           this.refreshPromise = null;
